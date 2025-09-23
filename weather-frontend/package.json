@@ -24,23 +24,14 @@
     "test": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject"
   },
-<<<<<<< HEAD
   "jest": {
     "transformIgnorePatterns": [
-      "node_modules/(?!(react-leaflet|@react-leaflet)/)"
-    ]
+      "/node_modules/(?!react-leaflet|@react-leaflet|leaflet)/"
+    ],
+    "moduleNameMapper": {
+      "\\.css$": "<rootDir>/__mocks__/styleMock.js"
+    }
   },
-=======
-   "jest": {
-  "transformIgnorePatterns": [
-    "/node_modules/(?!react-leaflet|@react-leaflet|leaflet)/"
-  ],
-  "moduleNameMapper": {
-    "\\.css$": "<rootDir>/__mocks__/styleMock.js"
-  }
-}
-,
->>>>>>> 991e00a (Updated frontend tests, backend Docker config, and CI/CD workflow)
   "eslintConfig": {
     "extends": [
       "react-app",
