@@ -16,7 +16,7 @@ function App() {
   const [currentLocationName, setCurrentLocationName] = useState("Vijayawada");
   const [isLoading, setIsLoading] = useState(true);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUserId, setCurrentUserId] = useState(null); // Logged-in user ID
+  const [currentUserId, setCurrentUserId] = useState(null); // ✅ userId only
 
   useEffect(() => {
     if (!isLoggedIn) return;
@@ -48,7 +48,9 @@ function App() {
         setSelectedDay(Object.values(daily)[0]);
 
         if (currentUserId) {
-          const historyResponse = await fetch(`http://localhost:8081/api/history?userId=${currentUserId}`);
+          const historyResponse = await fetch(
+            `http://localhost:8081/api/history?userId=${currentUserId}`
+          );
           const historyData = await historyResponse.json();
           setHistory(historyData);
         }
@@ -84,7 +86,9 @@ function App() {
           body: JSON.stringify({ city: locationName, lat: coords.lat, lon: coords.lon })
         });
 
-        const historyResponse = await fetch(`http://localhost:8081/api/history?userId=${currentUserId}`);
+        const historyResponse = await fetch(
+          `http://localhost:8081/api/history?userId=${currentUserId}`
+        );
         const historyData = await historyResponse.json();
         setHistory(historyData);
       } catch (err) {
@@ -108,9 +112,10 @@ function App() {
     }
   };
 
-  const handleLoginSuccess = (userId) => {
+  // ✅ Fix: store only the ID
+  const handleLoginSuccess = (user) => {
     setIsLoggedIn(true);
-    setCurrentUserId(userId);
+    setCurrentUserId(user.id);
   };
 
   if (!isLoggedIn) return <LandingPage onLoginSuccess={handleLoginSuccess} />;

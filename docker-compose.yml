@@ -1,47 +1,31 @@
 services:
+  weather-mysql:
+    image: mysql:8
+    container_name: weather-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Varun@123
+      MYSQL_DATABASE: weatherdb
+    ports:
+      - "3306:3306"
+
   backend:
-             # move here from build
     build:
-      context: ./weather_data_by_ip_address-master
-      dockerfile: Dockerfile
+      context: ./weather_data_by_ip_address-master   # points to your backend folder
     container_name: weather-backend
     ports:
       - "8081:8081"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/weather?useSSL=false&serverTimezone=UTC
-      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_URL: jdbc:mysql://weather-mysql:3306/weatherdb
+      SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: Varun@123
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
-      - db
+      - weather-mysql
 
   frontend:
-            # move here from build
     build:
-      context: ./weather-frontend
-      dockerfile: Dockerfile
+      context: ./weather-frontend   # points to your frontend folder
     container_name: weather-frontend
     ports:
-      - "3000:80"
-    environment:
-      REACT_APP_API_URL: http://localhost:8081
+      - "3000:80"   # adjust if your frontend runs on another port
     depends_on:
       - backend
-
-  db:
-    image: mysql:8.0
-    platform: linux/amd64          # move here
-    container_name: weather-db
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: weather
-      MYSQL_USER: user
-      MYSQL_PASSWORD: Varun@123
-    ports:
-      - "3306:3306"
-    command: --default-authentication-plugin=mysql_native_password
-    volumes:
-      - weather-db-data:/var/lib/mysql
-
-volumes:
-  weather-db-data:
