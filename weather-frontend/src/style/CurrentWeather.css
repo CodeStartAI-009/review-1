@@ -1,0 +1,47 @@
+.current-weather {
+    background-color: #1f1f1f; /* dark gray */
+    border-radius: 1rem; /* rounded-2xl */
+    padding: 1.5rem; /* p-6 */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); /* shadow-xl */
+    border: 1px solid #2d2d2d; /* border-gray-800 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    max-width: 300px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .current-weather h2 {
+    font-size: 1.5rem; /* text-2xl */
+    font-weight: bold;
+    margin-bottom: 0.5rem; /* mb-2 */
+  }
+  
+  .current-weather img {
+    width: 80px; /* w-20 */
+    height: 80px; /* h-20 */
+  }
+  
+  .current-weather .description {
+    font-size: 1.125rem; /* text-xl */
+    margin: 0.25rem 0;
+    text-transform: capitalize;
+  }
+  
+  .current-weather .temperature {
+    font-size: 2.5rem; /* text-4xl */
+    font-weight: bold;
+    margin-top: 0.5rem; /* mt-2 */
+  }
+  
+  .current-weather .details {
+    display: flex;
+    gap: 1rem; /* gap-4 */
+    margin-top: 1rem; /* mt-4 */
+    font-size: 0.875rem; /* text-sm */
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  

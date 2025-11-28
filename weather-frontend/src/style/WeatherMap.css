@@ -1,0 +1,48 @@
+.weather-map-container {
+    width: 100%;
+    height: 24rem; /* h-96 equivalent */
+    border-radius: 1rem; /* rounded-xl */
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); /* shadow-lg */
+    border: 1px solid #2d2d2d; /* subtle border */
+  }
+  
+  /* Leaflet map */
+  .weather-map-container .leaflet-container {
+    width: 100%;
+    height: 100%;
+    background-color: #1e1e1e; /* dark background behind tiles */
+  }
+  
+  /* Popups styling */
+  .leaflet-popup-content-wrapper {
+    background-color: #111827;
+    color: #f9fafb;
+    font-size: 0.875rem;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+  }
+  
+  .leaflet-popup-tip {
+    background: #111827;
+  }
+  
+  /* Tooltip styling */
+  .leaflet-tooltip {
+    background-color: #1f2937;
+    color: #f9fafb;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #374151;
+  }
+  
+  /* Marker hover effect */
+  .leaflet-marker-icon {
+    transition: transform 0.2s;
+  }
+  
+  .leaflet-marker-icon:hover {
+    transform: scale(1.2);
+  }
+  

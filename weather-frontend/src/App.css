@@ -1,0 +1,140 @@
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.loading-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #000;
+  color: #fff;
+}
+
+.spinner {
+  border: 4px solid rgba(255,255,255,0.1);
+  border-top-color: #3b82f6;
+  border-radius: 50%;
+  width: 3rem;
+  height: 3rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-text {
+  margin-top: 1rem;
+  font-size: 1rem;
+  color: #9ca3af;
+}
+
+.app-container {
+  padding: 1rem;
+}
+
+/* Search + history */
+.search-history-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+@media(min-width: 1024px) {
+  .search-history-row {
+    flex-direction: row;
+  }
+}
+
+.search-bar-wrapper {
+  width: 100%;
+  max-width: 18rem;
+}
+
+.history-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.history-chip {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #1f2937;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.history-chip:hover {
+  background-color: #374151;
+}
+
+/* Main content grid */
+.main-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+@media(min-width: 1024px) {
+  .main-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Forecast + Hourly row */
+.forecast-hourly-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+@media(min-width: 1024px) {
+  .forecast-hourly-row {
+    flex-direction: row;
+  }
+}
+
+.forecast-card {
+  flex: 1;
+}
+
+.hourly-card {
+  flex: 2;
+}
+
+.hourly-placeholder {
+  background-color: #1f2937;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+}
+
+/* Weather Map */
+.weather-map {
+  height: 24rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+/* Responsive adjustments for columns */
+.lg-col-span-2 {
+  grid-column: span 2;
+}
+
+.lg-col-span-1 {
+  grid-column: span 1;
+}
