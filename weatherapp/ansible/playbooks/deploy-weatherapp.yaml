@@ -1,0 +1,6 @@
+- name: Deploy Weather Application to Kubernetes
+  hosts: local
+  gather_facts: false
+
+  roles:
+    - weatherapp

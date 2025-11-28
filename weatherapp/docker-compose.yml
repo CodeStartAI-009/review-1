@@ -1,0 +1,31 @@
+services:
+  weather-mysql:
+    image: mysql:8
+    container_name: weather-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: Varun@123
+      MYSQL_DATABASE: weatherdb
+    ports:
+      - "3306:3306"
+
+  backend:
+    build:
+      context: ./backend   # points to your backend folder
+    container_name: weather-backend
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://weather-mysql:3306/weatherdb
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Varun@123
+    depends_on:
+      - weather-mysql
+
+  frontend:
+    build:
+      context: ./frontend   # points to your frontend folder
+    container_name: weather-frontend
+    ports:
+      - "3000:80"   # adjust if your frontend runs on another port
+    depends_on:
+      - backend

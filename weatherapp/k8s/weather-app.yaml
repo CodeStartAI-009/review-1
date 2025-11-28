@@ -1,0 +1,161 @@
+###############################################
+# BACKEND DEPLOYMENT
+###############################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: weather-backend
+  template:
+    metadata:
+      labels:
+        app: weather-backend
+    spec:
+      containers:
+      - name: weather-backend
+        image: 2300090189/weather-backend:1.0
+        ports:
+        - containerPort: 8081
+        env:
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:mysql://weather-mysql:3306/weatherdb
+        - name: SPRING_DATASOURCE_USERNAME
+          value: root
+        - name: SPRING_DATASOURCE_PASSWORD
+          value: "Varun@123"
+---
+###############################################
+# BACKEND SERVICE
+###############################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: weather-backend
+spec:
+  selector:
+    app: weather-backend
+  ports:
+    - port: 8081
+      targetPort: 8081
+  type: ClusterIP
+---
+###############################################
+# FRONTEND DEPLOYMENT
+###############################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather-frontend
+  template:
+    metadata:
+      labels:
+        app: weather-frontend
+    spec:
+      containers:
+      - name: weather-frontend
+        image: 2300090189/weather-frontend:1.0
+        ports:
+        - containerPort: 80
+---
+###############################################
+# FRONTEND SERVICE
+###############################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: weather-frontend
+spec:
+  selector:
+    app: weather-frontend
+  ports:
+    - port: 80
+      targetPort: 80
+  type: ClusterIP
+---
+###############################################
+# INGRESS
+###############################################
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: weather-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: weather.local
+    http:
+      paths:
+      - path: /api(/|$)(.*)
+        pathType: Prefix
+        backend:
+          service:
+            name: weather-backend
+            port:
+              number: 8081
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: weather-frontend
+            port:
+              number: 80
+---
+###############################################
+# MYSQL DEPLOYMENT
+###############################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather-mysql
+  template:
+    metadata:
+      labels:
+        app: weather-mysql
+    spec:
+      containers:
+      - name: weather-mysql
+        image: mysql:8
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "Varun@123"
+        - name: MYSQL_DATABASE
+          value: "weatherdb"
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: mysql-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-storage
+        emptyDir: {}  # Replace with a PVC for real persistence
+---
+###############################################
+# MYSQL SERVICE
+###############################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: weather-mysql
+spec:
+  selector:
+    app: weather-mysql
+  ports:
+    - port: 3306
+      targetPort: 3306
+  clusterIP: None  # headless

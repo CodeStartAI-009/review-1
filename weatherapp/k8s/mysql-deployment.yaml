@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: weather-mysql
+  template:
+    metadata:
+      labels:
+        app: weather-mysql
+    spec:
+      containers:
+      - name: weather-mysql
+        image: mysql:8
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "Varun@123"
+        - name: MYSQL_DATABASE
+          value: "weatherdb"
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: mysql-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-storage
+        emptyDir: {}  # Replace with a PVC for real persistence
